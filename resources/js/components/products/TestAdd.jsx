@@ -103,11 +103,13 @@ export default function TestAdd() {
                         setName(event.target.value);
                     }}
                 />
-                
+
                 <Container maxWidth="lg">
                     <img src={photo} alt="" width="117px" height="100px" />
                 </Container>
-                <Typography variant="body1" color="initial">Add Image</Typography>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
                 <TextField type="file" onChange={changeHandler}></TextField>
                 <TextField
                     id="type"
@@ -128,6 +130,27 @@ export default function TestAdd() {
                     sx={{ width: "400px" }}
                 />
                 <Button onClick={(event) => createProduct(event)}>Save</Button>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
+                <Typography variant="body1" color="initial">
+                    Add Image
+                </Typography>
             </Stack>
         </Box>
     );
