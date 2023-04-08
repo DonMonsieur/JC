@@ -39,7 +39,7 @@ export default function TestInventory() {
         { id: "image", label: "Image", minWidth: 170, align: "left" },
         { id: "product", label: "Product", minWidth: 100, align: "left" },
         { id: "type", label: "Type", minWidth: 170, align: "left" },
-        { id: "inventory", label: "Inventory", minWidth: 170, align: "left" },
+        { id: "quantity", label: "Quantity", minWidth: 170, align: "left" },
         { id: "price", label: "Price", minWidth: 170, align: "left" },
     ];
 

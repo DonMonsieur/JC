@@ -48,7 +48,7 @@ export default function Inventory() {
                                 <th>Image</th>
                                 <th>Product</th>
                                 <th>Type</th>
-                                <th>Inventory</th>
+                                <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Actions</th>
                             </tr>
