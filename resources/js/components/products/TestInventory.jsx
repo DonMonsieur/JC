@@ -1,29 +1,29 @@
 import React, { useState } from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import { DataGrid } from "@mui/x-data-grid";
+import Header from "../Header";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import TestEdit from "./TestEdit";
 
 export default function TestInventory() {
     const navigate = useNavigate();
 
-    const [products, setProducts] = useState([]);
-
-    function newProduct() {
-        navigate("/inventory/new");
-    }
-
-    function TestAdd() {
+    function Add() {
         navigate("/inventory/add");
     }
+
+    function EditItem(id) {
+        navigate("/inventory/edit/" + id);
+    }
+
+    // function TestEdit(id) {
+    //     navigate("/testinventory/edit/" + id);
+    // }
+
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
         getProducts();
@@ -36,121 +36,96 @@ export default function TestInventory() {
     };
 
     const columns = [
-        { id: "image", label: "Image", minWidth: 170, align: "left" },
-        { id: "product", label: "Product", minWidth: 100, align: "left" },
-        { id: "type", label: "Type", minWidth: 170, align: "left" },
-        { id: "quantity", label: "Quantity", minWidth: 170, align: "left" },
-        { id: "price", label: "Price", minWidth: 170, align: "left" },
+        {
+            field: "image",
+            headerName: "Image",
+            width: 100,
+            align: "center",
+            headerAlign: "center",
+            renderCell: (params) => (
+                <img src={`/uploads/${params.value}`} height="40px" />
+            ),
+        },
+        {
+            field: "product",
+            headerName: "Product",
+            width: 200,
+            align: "center",
+            headerAlign: "center",
+        },
+        {
+            field: "type",
+            headerName: "Type",
+            width: 150,
+            align: "center",
+            headerAlign: "center",
+        },
+        {
+            field: "quantity",
+            headerName: "Quantity",
+            width: 150,
+            align: "center",
+            headerAlign: "center",
+        },
+        {
+            field: "price",
+            headerName: "Price",
+            width: 150,
+            align: "center",
+            headerAlign: "center",
+        },
+        {
+            field: "action",
+            id: "action",
+            headerName: "Action",
+            width: 150,
+            align: "center",
+            headerAlign: "center",
+            renderCell: (params) => params.row.action,
+        },
     ];
 
-    function createData(image, product, type, inventory, price) {
-        return { image, product, type, inventory, price };
-    }
+    const [rows, setRows] = useState([]);
 
-    const rows = [];
+    // function to update rows with products data
+    const updateRows = (products) => {
+        const newRows = products.map((item) => ({
+            id: item.id,
+            image: <img src={`/uploads/${item.photo}`} height="40px" />,
+            product: item.name,
+            type: item.type,
+            quantity: item.quantity,
+            price: item.price,
+            action: <TestEdit id={item.id} />,
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        }));
+        setRows(newRows);
     };
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
+    // call updateRows function with products data
+    useEffect(() => {
+        updateRows(products);
+    }, [products]);
 
+    // render the DataGrid with updated rows
     return (
-        <Paper
-            sx={{
-                width: "80%",
-                overflow: "hidden",
-                margin: "100px auto auto auto",
-            }}
-        >
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => TestAdd()}
-            >
+        <Box sx={{ height: 580, width: "95%", margin: "80px auto" }}>
+            <Header />
+            <Button variant="contained" color="primary" onClick={() => Add()}>
                 Add Item
             </Button>
-            <TableContainer sx={{ maxHeight: 440 }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {products.length > 0 &&
-                            products.map((item, key) => (
-                                <TableRow key={key}>
-                                    <TableCell>
-                                        <img
-                                            src={`/uploads/${item.photo}`}
-                                            height="40px"
-                                        />
-                                    </TableCell>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell>{item.type}</TableCell>
-                                    <TableCell>{item.quantity}</TableCell>
-                                    <TableCell>{item.price}</TableCell>
-                                    <TableCell></TableCell>
-                                </TableRow>
-                            ))}
-
-                        {/* {rows
-                            .slice(
-                                page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
-                            )
-                            .map((row) => {
-                                return (
-                                    <TableRow
-                                        hover
-                                        role="checkbox"
-                                        tabIndex={-1}
-                                        key={row.code}
-                                    >
-                                        {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell
-                                                    key={column.id}
-                                                    align={column.align}
-                                                >
-                                                    {column.format &&
-                                                    typeof value === "number"
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
-                                );
-                            })} */}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{
+                    pagination: {
+                        paginationModel: {
+                            pageSize: 10,
+                        },
+                    },
+                }}
+                pageSizeOptions={[5]}
             />
-        </Paper>
+        </Box>
     );
 }
