@@ -1,21 +1,17 @@
 import React from "react";
-import Header from "../Header";
-import { useNavigate } from "react-router-dom";
+import Header from '../Header'
 import { Box, Button, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
     const navigate = useNavigate();
 
-    function Inventory() {
+    function TestInventory() {
         navigate("/inventory");
     }
 
     function AddUser() {
         navigate("/user/add");
-    }
-
-    function TestInventory() {
-        navigate("/testinventory");
     }
 
     return (
@@ -27,7 +23,7 @@ export default function () {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => Inventory()}
+                        onClick={() => TestInventory()}
                     >
                         View Inventory
                     </Button>
@@ -37,13 +33,6 @@ export default function () {
                         onClick={() => AddUser()}
                     >
                         Add User
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => TestInventory()}
-                    >
-                        Test Inventory
                     </Button>
                 </Stack>
             </Box>

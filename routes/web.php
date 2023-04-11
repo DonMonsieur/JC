@@ -32,6 +32,11 @@ Route::get('/user/add', function () {
 Route::get('/inventory/edit/{id}', function ($id) {
     return view('welcome');
 });
+
 Route::get('/testinventory/edit/{id}', function ($id) {
+    return view('welcome');
+});
+
+Route::get('/main', function () {
     return view('welcome');
 });

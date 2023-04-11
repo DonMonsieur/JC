@@ -6,7 +6,6 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
-import TestEdit from "./TestEdit";
 
 export default function TestInventory() {
     const navigate = useNavigate();
@@ -96,8 +95,7 @@ export default function TestInventory() {
             type: item.type,
             quantity: item.quantity,
             price: item.price,
-            action: <TestEdit id={item.id} />,
-
+            action: <Button onClick={() => EditItem(item.id)}>Edit</Button>,
         }));
         setRows(newRows);
     };
