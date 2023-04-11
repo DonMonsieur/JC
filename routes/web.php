@@ -21,10 +21,17 @@ Route::get('/inventory', function () {
     return view('welcome');
 });
 
-Route::get('/inventory/new', function () {
+Route::get('/inventory/add', function () {
     return view('welcome');
 });
 
-Route::get('/inventory/add', function () {
+Route::get('/user/add', function () {
+    return view('welcome');
+});
+
+Route::get('/inventory/edit/{id}', function ($id) {
+    return view('welcome');
+});
+Route::get('/testinventory/edit/{id}', function ($id) {
     return view('welcome');
 });
